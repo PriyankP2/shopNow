@@ -93,41 +93,41 @@ aws ecr get-login-password --region <region> | docker login --username AWS --pas
 
 **IMPORTANT**: This project contains hardcoded references that you must update with your own values:
 
-3.1. Replace "aryan" with your username in these locations:
+3.1. Replace "<your-username>" with your username in these locations:
 
   **Ingress Paths** (in both Kubernetes manifests and Helm charts):
    - `kubernetes/k8s-manifests/ingress/ingress-shopnow.yaml`
-     - Change `/aryan` to `/<your-username>`
-     - Change `/aryan-admin` to `/<your-username>-admin`
+     - Change `/<your-username>` to `/<your-username>`
+     - Change `/<your-username>-admin` to `/<your-username>-admin`
    
    - `kubernetes/helm/charts/frontend/values.yaml`
-     - Change `path: /aryan` to `path: /<your-username>`
+     - Change `path: /<your-username>` to `path: /<your-username>`
    
    - `kubernetes/helm/charts/admin/values.yaml`
-     - Change `path: /aryan-admin` to `path: /<your-username>-admin`
+     - Change `path: /<your-username>-admin` to `path: /<your-username>-admin`
 
 
   **Nginx ConfigMaps**
-   - All references with 'aryan' to <your-username> in following files:
+   - All references with '<your-username>' to <your-username> in following files:
    - `kubernetes/k8s-manifests/frontend/cm-nginx.yaml`   
    - `kubernetes/k8s-manifests/admin/cm-nginx.yaml`
 
 
   **Helm Chart Nginx Configurations**:
-   - All references with 'aryan' in the 'nginx.config' section to <your-username> in following files:
+   - All references with '<your-username>' in the 'nginx.config' section to <your-username> in following files:
    - `kubernetes/helm/charts/frontend/values.yaml` 
    - `kubernetes/helm/charts/admin/values.yaml`
 
   **Dockerfiles** (Build Arguments):
    - `frontend/Dockerfile`
-     - Change `ARG USER_NAME=aryan` to `ARG USER_NAME=<your-username>`
+     - Change `ARG USER_NAME=<your-username>` to `ARG USER_NAME=<your-username>`
    
    - `admin/Dockerfile`
-     - Change `ARG USER_NAME=aryan` to `ARG USER_NAME=<your-username>`
+     - Change `ARG USER_NAME=<your-username>` to `ARG USER_NAME=<your-username>`
 
   **Build Script** (optional):
    - `scripts/build-and-push.sh`
-     - Update the example usage comments that reference "aryan"
+     - Update the example usage comments that reference "<your-username>"
 
 3.2. **ECR Repository Names** - Update to your username:
    - All `kubernetes/k8s-manifests/*/deployment.yaml` files
@@ -145,7 +145,7 @@ aws ecr get-login-password --region <region> | docker login --username AWS --pas
 
 3.4. **Update ArgoCD Repository URL**:
   - In `kubernetes/argocd/umbrella-application.yaml` and all `kubernetes/argocd/apps/*.yaml` files:
-  - Change `repoURL: 'https://github.com/aryanm12/shopNow'` 
+  - Change `repoURL: 'https://github.com/<your-username>m12/shopNow'` 
   - To `repoURL: 'https://github.com/<your-github-username>/<your-repo-name>'`
 
 
@@ -215,8 +215,8 @@ kubectl get storageclass
 ```bash
 scripts/build-and-push.sh <account-id>.dkr.ecr.<region>.amazonaws.com/<registry-name> <tag-name-number> <your-username> 
 
-# Example for user 'aryan' with tag 'latest' and ECR registry '975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow':
-./scripts/build-and-push.sh 975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow latest aryan
+# Example for user '<your-username>' with tag 'latest' and ECR registry '975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow':
+./scripts/build-and-push.sh 975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow latest <your-username>
 
 
 ```
