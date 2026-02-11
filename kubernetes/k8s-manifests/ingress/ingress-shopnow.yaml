@@ -10,14 +10,14 @@ spec:
   rules:
   - http:
       paths:
-      - path: /<your-username>-admin
+      - path: /priyankp2-admin
         pathType: Prefix
         backend:
           service:
             name: admin
             port:
               number: 80
-      - path: /<your-username>
+      - path: /priyankp2
         pathType: Prefix
         backend:
           service:
