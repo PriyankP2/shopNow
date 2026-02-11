@@ -18,7 +18,7 @@ nginx:
       root /usr/share/nginx/html;
       index index.html;
 
-      # Admin API - proxy to backend for <your-username>-admin (general catch-all)
+      # Admin API - proxy to backend for priyankp2-admin (general catch-all)
       location /priyankp2-admin/api/ {
         proxy_pass http://backend:5000/api/;
         proxy_set_header Host $host;
@@ -28,21 +28,21 @@ nginx:
         proxy_read_timeout 90;
       }
       
-      # Handle static assets within /<your-username>-admin/static/ - map to /static/
+      # Handle static assets within /priyankp2-admin/static/ - map to /static/
       location /priyankp2-admin/static/ {
         alias /usr/share/nginx/html/static/;
         expires 30d;
         add_header Cache-Control "public, immutable";
       }
       
-      # Handle other static assets (favicon, etc.) within /<your-username>-admin/
+      # Handle other static assets (favicon, etc.) within /priyankp2-admin/
       location ~ ^/priyankp2-admin/(.*\.(css|js|map|svg|gif|png|jpg|jpeg|ico|woff2?|ttf|eot))$ {
         alias /usr/share/nginx/html/$1;
         expires 30d;
         add_header Cache-Control "public, immutable";
       }
       
-      # Handle /<your-username>-admin path - serve the React app
+      # Handle /priyankp2-admin path - serve the React app
       # This catches all paths and serves index.html for SPA routing
       location / {
         try_files $uri $uri/ /index.html;

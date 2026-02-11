@@ -34,16 +34,16 @@ helm version
 ### Deploy Individual Charts
 ```bash
 # Deploy in dependency order
-helm upgrade --install mongo kubernetes/helm/charts/mongo -n shopnow-demo --create-namespace
-helm upgrade --install backend kubernetes/helm/charts/backend -n shopnow-demo
-helm upgrade --install frontend kubernetes/helm/charts/frontend -n shopnow-demo
-helm upgrade --install admin kubernetes/helm/charts/admin -n shopnow-demo
+helm upgrade --install mongo kubernetes/helm/charts/mongo -n shopnow-priyankp2 --create-namespace
+helm upgrade --install backend kubernetes/helm/charts/backend -n shopnow-priyankp2
+helm upgrade --install frontend kubernetes/helm/charts/frontend -n shopnow-priyankp2
+helm upgrade --install admin kubernetes/helm/charts/admin -n shopnow-priyankp2
 ```
 
 ### Deploy with Custom Values
 ```bash
 # Override default values
-helm upgrade --install --install backend charts/backend -n shopnow-demo \
+helm upgrade --install --install backend charts/backend -n shopnow-priyankp2 \
   --set replicaCount=3 \
   --set image.tag=v1.2.0 \
   --set resources.requests.cpu=200m
@@ -68,28 +68,28 @@ helm upgrade --install --install backend charts/backend -f values-prod.yaml
 # Upgrade with new image
 helm upgrade --install backend charts/backend \
   --set image.tag=v1.3.0 \
-  --namespace shopnow-demo
+  --namespace shopnow-priyankp2
 
 # Upgrade with new values file
 helm upgrade --install backend charts/backend \
   -f new-values.yaml \
-  --namespace shopnow-demo
+  --namespace shopnow-priyankp2
 ```
 
 ### Rollback Deployments
 ```bash
 # View release history
-helm history backend -n shopnow-demo
+helm history backend -n shopnow-priyankp2
 
 # Rollback to previous version
-helm rollback backend 1 -n shopnow-demo
+helm rollback backend 1 -n shopnow-priyankp2
 ```
 
 ### Uninstall Charts
 ```bash
 # Remove individual chart
-helm uninstall backend -n shopnow-demo
+helm uninstall backend -n shopnow-priyankp2
 
 # Remove all charts
-helm uninstall mongo backend frontend admin -n shopnow-demo
+helm uninstall mongo backend frontend admin -n shopnow-priyankp2
 ```

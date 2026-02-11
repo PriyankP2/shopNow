@@ -26,31 +26,31 @@ Like folders for organizing your applications
 ```bash
 # Our ShopNow namespace
 kubectl get namespaces
-kubectl get pods -n shopnow-demo
+kubectl get pods -n shopnow-priyankp2
 ```
 
 #### 3. **Pod** 📦
 The smallest unit in Kubernetes - usually contains one container and if required other supporting containers
 ```bash
 # See pods in action
-kubectl get pods -n shopnow-demo
-kubectl describe pod <pod-name> -n shopnow-demo
+kubectl get pods -n shopnow-priyankp2
+kubectl describe pod <pod-name> -n shopnow-priyankp2
 ```
 
 #### 4. **Deployment** 🚀
 Manages multiple copies (replicas) of your application
 ```bash
 # See deployments
-kubectl get deployments -n shopnow-demo
-kubectl scale deployment backend --replicas=3 -n shopnow-demo
+kubectl get deployments -n shopnow-priyankp2
+kubectl scale deployment backend --replicas=3 -n shopnow-priyankp2
 ```
 
 #### 5. **Service** 🌐
 Provides a stable way to access your pods (like a phone number that never changes)
 ```bash
 # See services
-kubectl get services -n shopnow-demo
-kubectl describe service backend -n shopnow-demo
+kubectl get services -n shopnow-priyankp2
+kubectl describe service backend -n shopnow-priyankp2
 ```
 
 It helps in Service Discovery within Kubernetes cluster and exposing applications to the external world
@@ -60,24 +60,24 @@ It helps in Service Discovery within Kubernetes cluster and exposing application
 Stores configuration data (like environment variables)
 ```bash
 # See configuration
-kubectl get configmaps -n shopnow-demo
-kubectl describe configmap backend-config -n shopnow-demo
+kubectl get configmaps -n shopnow-priyankp2
+kubectl describe configmap backend-config -n shopnow-priyankp2
 ```
 
 #### 7. **Secret** 🔐
 Stores sensitive data (passwords, API keys)
 ```bash
 # See secrets (data is encoded)
-kubectl get secrets -n shopnow-demo
-kubectl describe secret db-secret -n shopnow-demo
+kubectl get secrets -n shopnow-priyankp2
+kubectl describe secret db-secret -n shopnow-priyankp2
 ```
 
 #### 8. **Ingress** 🌍
 Routes external traffic to your services (like a smart reverse proxy)
 ```bash
 # See ingress rules
-kubectl get ingress -n shopnow-demo
-kubectl describe ingress shopnow-ingress -n shopnow-demo
+kubectl get ingress -n shopnow-priyankp2
+kubectl describe ingress shopnow-ingress -n shopnow-priyankp2
 
 # Check ingress controller
 kubectl get pods -n ingress-nginx
@@ -92,8 +92,8 @@ kubectl get pods -n ingress-nginx
 **PVC**: Request for storage by a pod (like asking for space)
 ```bash
 # See storage resources
-kubectl get pv,pvc -n shopnow-demo
-kubectl describe pvc mongo-pvc -n shopnow-demo
+kubectl get pv,pvc -n shopnow-priyankp2
+kubectl describe pvc mongo-pvc -n shopnow-priyankp2
 ```
 **Why separate PV and PVC?**
 - **PV**: Cluster admin provisions storage

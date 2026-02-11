@@ -16,7 +16,7 @@ spec:
       releaseName: frontend
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: shopnow-demo
+    namespace: shopnow-priyankp2
   syncPolicy:
     automated:
       prune: true

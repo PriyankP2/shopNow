@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # scripts/build-and-push.sh
 # Usage: ./scripts/build-and-push.sh <registry_prefix> <tag> <username>
-# Example: ./scripts/build-and-push.sh your.registry.example.com/shopnow v1.0 <your-username>
+# Example: ./scripts/build-and-push.sh your.registry.example.com/shopnow v1.0 priyankp2
 
 set -euo pipefail
 
@@ -9,12 +9,12 @@ set -euo pipefail
 if [ $# -ne 3 ]; then
     echo "Error: All parameters are required!"
     echo "Usage: $0 <registry_prefix> <tag> <username>"
-    echo "Example: $0 123456789012.dkr.ecr.us-east-1.amazonaws.com/shopnow v1.0 <your-username>"
+    echo "Example: $0 123456789012.dkr.ecr.us-east-1.amazonaws.com/shopnow v1.0 priyankp2"
     echo ""
     echo "Parameters:"
     echo "  registry_prefix: Your container registry URL (e.g., ECR, Docker Hub)"
     echo "  tag: Version tag for the images (e.g., v1.0, latest, dev)"
-    echo "  username: Username for the learner (e.g., <your-username>, john, sarah)"
+    echo "  username: Username for the learner (e.g., priyankp2, john, sarah)"
     exit 1
 fi
 

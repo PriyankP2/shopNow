@@ -7,7 +7,7 @@ pipeline {
     REGISTRY = "your.registry.example.com/shopnow"
     KUBECONFIG_FILE = 'kubeconfig-credential'
     RELEASE_NAME = 'shopnow-admin'
-    NAMESPACE = 'shopnow-demo'
+    NAMESPACE = 'shopnow-priyankp2'
     CHART_PATH = 'charts/admin'
   }
   stages {

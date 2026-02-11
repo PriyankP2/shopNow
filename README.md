@@ -75,9 +75,9 @@ aws sts get-caller-identity
 
 like:
 
-aws ecr create-repository --repository-name <your-username>-shopnow/frontend --region <region>
-aws ecr create-repository --repository-name <your-username>-shopnow/backend --region <region>
-aws ecr create-repository --repository-name <your-username>-shopnow/admin --region <region>
+aws ecr create-repository --repository-name priyankp2-shopnow/frontend --region <region>
+aws ecr create-repository --repository-name priyankp2-shopnow/backend --region <region>
+aws ecr create-repository --repository-name priyankp2-shopnow/admin --region <region>
 
 # Get login token (run this command everytime as the docker credentials are persisted only on the terminal)
 aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account-id>.dkr.ecr.<region>.amazonaws.com
@@ -93,59 +93,59 @@ aws ecr get-login-password --region <region> | docker login --username AWS --pas
 
 **IMPORTANT**: This project contains hardcoded references that you must update with your own values:
 
-3.1. Replace "<your-username>" with your username in these locations:
+3.1. Replace "priyankp2" with your username in these locations:
 
   **Ingress Paths** (in both Kubernetes manifests and Helm charts):
    - `kubernetes/k8s-manifests/ingress/ingress-shopnow.yaml`
-     - Change `/<your-username>` to `/<your-username>`
-     - Change `/<your-username>-admin` to `/<your-username>-admin`
+     - Change `/priyankp2` to `/priyankp2`
+     - Change `/priyankp2-admin` to `/priyankp2-admin`
    
    - `kubernetes/helm/charts/frontend/values.yaml`
-     - Change `path: /<your-username>` to `path: /<your-username>`
+     - Change `path: /priyankp2` to `path: /priyankp2`
    
    - `kubernetes/helm/charts/admin/values.yaml`
-     - Change `path: /<your-username>-admin` to `path: /<your-username>-admin`
+     - Change `path: /priyankp2-admin` to `path: /priyankp2-admin`
 
 
   **Nginx ConfigMaps**
-   - All references with '<your-username>' to <your-username> in following files:
+   - All references with 'priyankp2' to priyankp2 in following files:
    - `kubernetes/k8s-manifests/frontend/cm-nginx.yaml`   
    - `kubernetes/k8s-manifests/admin/cm-nginx.yaml`
 
 
   **Helm Chart Nginx Configurations**:
-   - All references with '<your-username>' in the 'nginx.config' section to <your-username> in following files:
+   - All references with 'priyankp2' in the 'nginx.config' section to priyankp2 in following files:
    - `kubernetes/helm/charts/frontend/values.yaml` 
    - `kubernetes/helm/charts/admin/values.yaml`
 
   **Dockerfiles** (Build Arguments):
    - `frontend/Dockerfile`
-     - Change `ARG USER_NAME=<your-username>` to `ARG USER_NAME=<your-username>`
+     - Change `ARG USER_NAME=priyankp2` to `ARG USER_NAME=priyankp2`
    
    - `admin/Dockerfile`
-     - Change `ARG USER_NAME=<your-username>` to `ARG USER_NAME=<your-username>`
+     - Change `ARG USER_NAME=priyankp2` to `ARG USER_NAME=priyankp2`
 
   **Build Script** (optional):
    - `scripts/build-and-push.sh`
-     - Update the example usage comments that reference "<your-username>"
+     - Update the example usage comments that reference "priyankp2"
 
 3.2. **ECR Repository Names** - Update to your username:
    - All `kubernetes/k8s-manifests/*/deployment.yaml` files
    - All `kubernetes/helm/charts/*/values.yaml` files
    - All `jenkins\Jenkinsfile.*.*` files
-   - Change `shopnow/frontend` to `<your-username>-shopnow/frontend`
-   - Change `shopnow/backend` to `<your-username>-shopnow/backend`
-   - Change `shopnow/admin` to `<your-username>-shopnow/admin`
+   - Change `shopnow/frontend` to `priyankp2-shopnow/frontend`
+   - Change `shopnow/backend` to `priyankp2-shopnow/backend`
+   - Change `shopnow/admin` to `priyankp2-shopnow/admin`
 
 3.3. **Update Namespace** on these locations:
   - `kubernetes/k8s-manifests/namespace/namespace.yaml` - Change namespace name
   - All files in `kubernetes/k8s-manifests/*/` - Update namespace references
   - `kubernetes/argocd/apps/*.yaml` - Update destination namespace
-  - All kubectl commands in this README - Replace `shopnow-demo` with your namespace
+  - All kubectl commands in this README - Replace `shopnow-priyankp2` with your namespace
 
 3.4. **Update ArgoCD Repository URL**:
   - In `kubernetes/argocd/umbrella-application.yaml` and all `kubernetes/argocd/apps/*.yaml` files:
-  - Change `repoURL: 'https://github.com/<your-username>m12/shopNow'` 
+  - Change `repoURL: 'https://github.com/priyankp2m12/shopNow'` 
   - To `repoURL: 'https://github.com/<your-github-username>/<your-repo-name>'`
 
 
@@ -160,15 +160,15 @@ kubectl cluster-info
 kubectl get nodes
 ```
 
-Note: All the below mentioned kubectl commands assume that you are working with "shopnow-demo" namespace, update the namespace as per yours where ever you find "shopnow-demo".
+Note: All the below mentioned kubectl commands assume that you are working with "shopnow-priyankp2" namespace, update the namespace as per yours where ever you find "shopnow-priyankp2".
 
 #### 5. Docker Registry Secret (Only required for private ECR registry)
 **Note**: Skip this step if using public Docker Hub images or public ECR repositories.
 
 ```bash
 # Create registry secret for private ECR image pulls
-kubectl create ns shopnow-demo
-kubectl create secret docker-registry ecr-secret --docker-server=<account-id>.dkr.ecr.us-east-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region us-east-1) --namespace=shopnow-demo
+kubectl create ns shopnow-priyankp2
+kubectl create secret docker-registry ecr-secret --docker-server=<account-id>.dkr.ecr.us-east-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region us-east-1) --namespace=shopnow-priyankp2
 ```
 
 #### 6. Install Pre-requisites in the Kubernetes Environment (Has to be done once per Kubernetes Cluster)
@@ -213,10 +213,10 @@ kubectl get storageclass
 ### 1. Build the docker images and push it to the ECR registry created above
 
 ```bash
-scripts/build-and-push.sh <account-id>.dkr.ecr.<region>.amazonaws.com/<registry-name> <tag-name-number> <your-username> 
+scripts/build-and-push.sh <account-id>.dkr.ecr.<region>.amazonaws.com/<registry-name> <tag-name-number> priyankp2 
 
-# Example for user '<your-username>' with tag 'latest' and ECR registry '975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow':
-./scripts/build-and-push.sh 975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow latest <your-username>
+# Example for user 'priyankp2' with tag 'latest' and ECR registry '975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow':
+./scripts/build-and-push.sh 975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow latest priyankp2
 
 
 ```
@@ -237,10 +237,10 @@ kubectl apply -f kubernetes/k8s-manifests/daemonsets-example/
 **Option B: Helm Charts**
 
 ```bash
-helm upgrade --install mongo kubernetes/helm/charts/mongo -n shopnow-demo --create-namespace
-helm upgrade --install backend kubernetes/helm/charts/backend -n shopnow-demo
-helm upgrade --install frontend kubernetes/helm/charts/frontend -n shopnow-demo
-helm upgrade --install admin kubernetes/helm/charts/admin -n shopnow-demo
+helm upgrade --install mongo kubernetes/helm/charts/mongo -n shopnow-priyankp2 --create-namespace
+helm upgrade --install backend kubernetes/helm/charts/backend -n shopnow-priyankp2
+helm upgrade --install frontend kubernetes/helm/charts/frontend -n shopnow-priyankp2
+helm upgrade --install admin kubernetes/helm/charts/admin -n shopnow-priyankp2
 ```
 
 **Option C: ArgoCD GitOps**
@@ -250,7 +250,7 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # Create target namespace
-kubectl create namespace shopnow-demo
+kubectl create namespace shopnow-priyankp2
 
 # Deploy applications
 kubectl apply -f kubernetes/argocd/umbrella-application.yaml
@@ -265,12 +265,12 @@ kubectl get applications -n argocd
 ```bash
 
 # check the status of the mongo-0 pods 
-kubectl get pods -n shopnow-demo
+kubectl get pods -n shopnow-priyankp2
 
 # if mongo-0 pod is healthy, then run following command to create a user for the backend to connect
 # user credentials should be same as mentioned in the backend secrets-db.yaml file
 # First exex into the pods
-kubectl -n shopnow-demo exec -it mongo-0 -- mongosh
+kubectl -n shopnow-priyankp2 exec -it mongo-0 -- mongosh
 
 # Run below commands
 use admin;
@@ -286,46 +286,46 @@ db.createUser({
 exit
 
 # Restart backend deployment
-kubectl rollout restart deploy backend -n shopnow-demo
+kubectl rollout restart deploy backend -n shopnow-priyankp2
 ```
 
 ### 3. Check the resources deployed
 
 ```bash
 # Check Pods
-kubectl get pods -n shopnow-demo
+kubectl get pods -n shopnow-priyankp2
 
 # Check Deployment
-kubectl get deploy -n shopnow-demo
+kubectl get deploy -n shopnow-priyankp2
 
 # Check Services
-kubectl get svc -n shopnow-demo
+kubectl get svc -n shopnow-priyankp2
 
 # Check daemonsets
-kubectl get daemonsets -n shopnow-demo
+kubectl get daemonsets -n shopnow-priyankp2
 
 # Check statefulsets
-kubectl get statefulsets -n shopnow-demo
+kubectl get statefulsets -n shopnow-priyankp2
 
 # Check HPA
-kubectl get hpa -n shopnow-demo
+kubectl get hpa -n shopnow-priyankp2
 
 # Check all of the above at once
-kubectl get all -n shopnow-demo
+kubectl get all -n shopnow-priyankp2
 
 # Check configmaps
-kubectl get cm -n shopnow-demo
+kubectl get cm -n shopnow-priyankp2
 
 # Check secrets
-kubectl get secrets -n shopnow-demo
+kubectl get secrets -n shopnow-priyankp2
 
 # Check ingress
-kubectl get ing -n shopnow-demo
+kubectl get ing -n shopnow-priyankp2
 
 # Sequence to debug in case of any issue with the pods
-kubectl get pods -n shopnow-demo
-kubectl describe pod backend-746cc99cd-cqrgf -n shopnow-demo # Assuming that pod backend-746cc99cd-cqrgf has an error
-kubectl logs backend-746cc99cd-cqrgf -n shopnow-demo --previous # If no details are found in the above command or if details like liveness probe failed are coming
+kubectl get pods -n shopnow-priyankp2
+kubectl describe pod backend-746cc99cd-cqrgf -n shopnow-priyankp2 # Assuming that pod backend-746cc99cd-cqrgf has an error
+kubectl logs backend-746cc99cd-cqrgf -n shopnow-priyankp2 --previous # If no details are found in the above command or if details like liveness probe failed are coming
 
 ```
 
@@ -334,8 +334,8 @@ kubectl logs backend-746cc99cd-cqrgf -n shopnow-demo --previous # If no details 
 
 ## 🌐 Access the Apps
 
-* **Customer App** → [http://<load-balancer-ip-or-dns>/<your-username>](http://<load-balancer-ip-or-dns>/<your-username>)
-* **Admin Dashboard** → [http://<load-balancer-ip-or-dns>/<your-username>-admin](http://<load-balancer-ip-or-dns>/<your-username>-admin)
+* **Customer App** → [http://<load-balancer-ip-or-dns>/priyankp2](http://<load-balancer-ip-or-dns>/priyankp2)
+* **Admin Dashboard** → [http://<load-balancer-ip-or-dns>/priyankp2-admin](http://<load-balancer-ip-or-dns>/priyankp2-admin)
 
 ---
 

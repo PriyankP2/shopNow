@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: admin
-  namespace: shopnow-demo
+  namespace: shopnow-priyankp2
   labels:
     app: admin
 spec:

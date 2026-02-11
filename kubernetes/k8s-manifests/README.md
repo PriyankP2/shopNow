@@ -34,14 +34,14 @@ kubectl apply -f namespace/
 ```bash
 kubectl apply -f database/
 # Wait for MongoDB to be ready
-kubectl wait --for=condition=ready pod/mongo-0 -n shopnow-demo --timeout=300s
+kubectl wait --for=condition=ready pod/mongo-0 -n shopnow-priyankp2 --timeout=300s
 ```
 
 ### 3. Deploy Backend API
 ```bash
 kubectl apply -f backend/
 # Wait for backend to be ready
-kubectl wait --for=condition=available deployment/backend -n shopnow-demo --timeout=300s
+kubectl wait --for=condition=available deployment/backend -n shopnow-priyankp2 --timeout=300s
 ```
 
 ### 4. Deploy Frontend Applications
@@ -63,7 +63,7 @@ Creates an isolated environment for the ShopNow application.
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: shopnow-demo
+  name: shopnow-priyankp2
   labels:
     app: shopnow
 ```
@@ -104,44 +104,44 @@ metadata:
 ### Check Deployment Status
 ```bash
 # Overview of all resources
-kubectl get all -n shopnow-demo
+kubectl get all -n shopnow-priyankp2
 
 # Detailed pod information
-kubectl get pods -n shopnow-demo -o wide
+kubectl get pods -n shopnow-priyankp2 -o wide
 
 # Check service endpoints
-kubectl get endpoints -n shopnow-demo
+kubectl get endpoints -n shopnow-priyankp2
 ```
 
 ### Debugging
 ```bash
 # Pod logs
-kubectl logs deployment/backend -n shopnow-demo
+kubectl logs deployment/backend -n shopnow-priyankp2
 
 # Pod details and events
-kubectl describe pod <pod-name> -n shopnow-demo
+kubectl describe pod <pod-name> -n shopnow-priyankp2
 
 # Interactive shell
-kubectl exec -it <pod-name> -n shopnow-demo -- /bin/bash
+kubectl exec -it <pod-name> -n shopnow-priyankp2 -- /bin/bash
 ```
 
 ### Scaling
 ```bash
 # Scale backend
-kubectl scale deployment backend --replicas=3 -n shopnow-demo
+kubectl scale deployment backend --replicas=3 -n shopnow-priyankp2
 
 # Check HPA status
-kubectl get hpa -n shopnow-demo
+kubectl get hpa -n shopnow-priyankp2
 ```
 
 ### Access Applications
 ```bash
 # Port forward to access locally
-kubectl port-forward svc/frontend 3000:3000 -n shopnow-demo
-kubectl port-forward svc/backend 5000:5000 -n shopnow-demo
-kubectl port-forward svc/admin 3001:3001 -n shopnow-demo
+kubectl port-forward svc/frontend 3000:3000 -n shopnow-priyankp2
+kubectl port-forward svc/backend 5000:5000 -n shopnow-priyankp2
+kubectl port-forward svc/admin 3001:3001 -n shopnow-priyankp2
 
 # If using NodePort services
-kubectl get svc -n shopnow-demo
+kubectl get svc -n shopnow-priyankp2
 # Access via http://<node-ip>:<node-port>
 ```

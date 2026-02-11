@@ -319,7 +319,7 @@ CMD ["node", "server.js"]
 ### Service Communication
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                 Kubernetes Namespace: shopnow-demo         │
+│                 Kubernetes Namespace: shopnow-priyankp2         │
 │                                                             │
 │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
 │  │  frontend   │    │    admin    │    │   backend   │     │
@@ -381,7 +381,7 @@ Resources:
 ## 🔐 Security Architecture
 
 ### Network Security
-- **Namespace Isolation**: All components in `shopnow-demo` namespace
+- **Namespace Isolation**: All components in `shopnow-priyankp2` namespace
 - **Service-to-Service**: Internal ClusterIP communication
 - **API Gateway Pattern**: nginx proxies external requests
 - **No Direct Database Access**: Only backend can access MongoDB
