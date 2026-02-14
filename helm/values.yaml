@@ -1,0 +1,26 @@
+namespace: shopnow
+
+replicaCount:
+  frontend: 1
+  backend: 2
+  admin: 2
+  mongo: 1
+
+image:
+  frontend:
+    repository: 975050024946.dkr.ecr.us-west-1.amazonaws.com/shopnow-frontend
+    tag: v1
+  backend:
+    repository: 975050024946.dkr.ecr.us-west-1.amazonaws.com/shopnow-backend
+    tag: v1
+  admin:
+    repository: 975050024946.dkr.ecr.us-west-1.amazonaws.com/shopnow-admin
+    tag: v1
+  mongo:
+    repository: mongo
+    tag: "6"
+
+mongo:
+  username: shopuser
+  password: ShopNowPass123
+  database: shopnow

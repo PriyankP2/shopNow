@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount.backend }}
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      imagePullSecrets:
+        - name: ecr-secret
+      containers:
+        - name: backend
+          image: {{ .Values.image.backend.repository }}:{{ .Values.image.backend.tag }}
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGODB_URI
+              value: mongodb://{{ .Values.mongo.username }}:{{ .Values.mongo.password }}@mongo:27017/{{ .Values.mongo.database }}?authSource=admin

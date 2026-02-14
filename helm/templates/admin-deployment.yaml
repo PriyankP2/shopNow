@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount.admin }}
+  selector:
+    matchLabels:
+      app: admin
+  template:
+    metadata:
+      labels:
+        app: admin
+    spec:
+      imagePullSecrets:
+        - name: ecr-secret
+      containers:
+        - name: admin
+          image: {{ .Values.image.admin.repository }}:{{ .Values.image.admin.tag }}
+          ports:
+            - containerPort: 80
