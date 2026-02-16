@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    environment {
+        DEPLOY_SERVER = "54.241.235.66"
+        DEPLOY_USER = "ec2-user"
+        HELM_PATH = "/home/ec2-user/shopnow"
+        RELEASE_NAME = "shopnow"
+        NAMESPACE = "shopnow"
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Set Image Tag') {
+            steps {
+                script {
+                    IMAGE_TAG = sh(
+                        script: "git rev-parse --short HEAD",
+                        returnStdout: true
+                    ).trim()
+                }
+            }
+        }
+
+        stage('Deploy Admin via Helm') {
+            steps {
+                withCredentials([
+                    sshUserPrivateKey(
+                        credentialsId: 'k8s-deploy-key',
+                        keyFileVariable: 'SSH_KEY'
+                    )
+                ]) {
+                    sh """
+                    ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_SERVER} '
+                        cd ${HELM_PATH} &&
+                        helm upgrade --install ${RELEASE_NAME} . \
+                          -n ${NAMESPACE} \
+                          --set admin.image.tag=${IMAGE_TAG}
+                    '
+                    """
+                }
+            }
+        }
+    }
+}
