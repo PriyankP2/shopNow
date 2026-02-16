@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = "us-west-1"
+        ECR_REPO = "975050024946.dkr.ecr.us-west-1.amazonaws.com/shopnow-admin"
+        IMAGE_TAG = "${env.GIT_COMMIT.take(7)}"
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh """
+                docker build -t shopnow-admin:${IMAGE_TAG} ./admin
+                """
+            }
+        }
+
+        stage('Login to ECR') {
+            steps {
+                sh """
+                aws ecr get-login-password --region ${AWS_REGION} \
+                | docker login --username AWS --password-stdin 975050024946.dkr.ecr.${AWS_REGION}.amazonaws.com
+                """
+            }
+        }
+
+        stage('Tag & Push to ECR') {
+            steps {
+                sh """
+                docker tag shopnow-admin:${IMAGE_TAG} ${ECR_REPO}:${IMAGE_TAG}
+                docker push ${ECR_REPO}:${IMAGE_TAG}
+                """
+            }
+        }
+    }
+}
